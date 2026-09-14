@@ -93,6 +93,7 @@ class MyBot(Bot):
 
         controls = ControllerState()
         controls.steer = steer_toward_target(my_car, target_location)
+        controls.boost = True
         controls.throttle = 1.0
         # You can set more controls if you want, like controls.boost.
 
