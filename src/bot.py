@@ -45,6 +45,7 @@ class MyBot(Bot):
         car_location = Vec3(my_car.physics.location)
         car_velocity = Vec3(my_car.physics.velocity)
         ball_location = Vec3(packet.balls[0].physics.location)
+        ball_velocity = Vec3(packet.balls[0].physics.velocity)
 
         # By default we will chase the ball, but target_location can be changed later
         target_location = ball_location
@@ -55,7 +56,7 @@ class MyBot(Bot):
             # We're far away from the ball, let's try to lead it a little bit
             # self.ball_prediction can predict bounces, etc
             ball_in_future = find_slice_at_time(
-                self.ball_prediction, packet.match_info.seconds_elapsed + 2
+                self.ball_prediction, packet.match_info.seconds_elapsed + 5
             )
 
             # ball_in_future might be None if we don't have an adequate ball prediction right now, like during
