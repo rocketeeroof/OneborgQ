@@ -47,7 +47,7 @@ class MyBot(Bot):
         ball_location = Vec3(packet.balls[0].physics.location)
         ball_velocity = Vec3(packet.balls[0].physics.velocity)
         goal_location = Vec3(0, 5120 * (1 - 2 * self.team), 0)
-
+        # Skibidi
         # By default we will chase the ball, but target_location can be changed later
         target_location = ball_location
 
