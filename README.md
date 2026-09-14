@@ -1,48 +1,74 @@
-# RLBotPythonExample
+# Oneborg Q
+This is a 1v1 only bot.
 
-Example of a Python bot using the RLBot framework
+*italic*
 
-Wiki: [RLBot/python-interface/wiki](https://github.com/RLBot/python-interface/wiki)
+_italic_
 
-## Quick Start
+**italic**
 
-1. Install [Python 3.12 or later](https://www.python.org/)
-1. Create a Python virtual environment
-   - `python -m venv venv`
-1. Activate the virtual environment
-   - Windows: `.\venv\Scripts\activate`
-   - Linux: `source venv/bin/activate`
-1. Install the required packages
-   - `pip install -r requirements.txt`
-1. Modify `rlbot.toml` to your liking
-   - Note: `dev.toml` also exists with a few changed settings that might be useful for development
-1. Start a match with `python run.py`
+__italic__
 
-## Changing the bot
+~~italic~~~
 
-- Bot behavior is controlled by `src/bot.py`
-- Bot appearance is controlled by `src/loadout.toml`
+___
 
-## Configuring for the v5 botpack
+---
 
-1. `pip install pyinstaller`
-1. `pyinstaller --onefile src/bot.py --paths src` -
-  This will create a file called `bot.spec`.
-1. Create `bob.toml` in the same directory as the spec file with the following content:
-   ```toml
-   [[config]]
-   project_name = "PythonExample"
-   bot_configs = ["src/bot.toml"]
+\*hello\*
 
-   [config.builder_config]
-   builder_type = "pyinstaller"
-   entry_file = "bot.spec"
-   ```
+<!-- Comment -->
 
-   - `project_name` will be the name of your bot's folder in the botpack
-   - `bot_configs` is a list of bot configs that will be included in the botpack
-   - `builder_type` should always be `pyinstaller`
-   - `entry_file` is the name of the spec file
+> quote!
 
-1. Commit both `bot.spec` and `bob.toml` to your bot's repository.
-  Note that `bob.toml` CANNOT be renamed, but `bot.spec` can be anything as long as `entry_file` is also renamed to reflect the change.
+[Traversy Media](https://www.youtube.com)
+
+[Traversy Media](https://www.youtube.com "Youtube!")
+
+<!-- UL -->
+
+* 1
+* 2
+* 3
+  * 3.1
+
+<!-- OL -->
+
+1. 1
+2. 2
+3. 3
+4. 4
+
+<!-- Code -->
+
+´<p>hello´
+
+<!-- Images -->
+
+![Markdown Logo](https://markdown-here.com/img/icon256.png)
+
+```
+   npm install
+
+   npm start
+```
+
+```javascript
+  function add(num1, num2) {
+   return num1 + num2;
+  }
+```
+
+```python
+  function add(num1, num2):
+   return num1 + num2
+```
+
+<!--tables-->
+| Name | Email |
+| ---- | ----- |
+| Hale | Skill |
+
+* [x] Task 1
+* [x] Task 2
+* [x] Task 3
