@@ -1,21 +1,31 @@
 from extra_utils.controller import controller
+from extra_utils.render import scheduled_render
 
 class situation():
-    def __init__(self):
+    def __init__(self, renderer):
         self.packet = None
         self.own_index = 0
+        self.own_team = 0
         self.field_info = None
         self.memory = None
         self.controller = None
         self.render = None
-        self.reset_memory()
+        self.ball_prediction = None
+        self.reset_memory(renderer)
 
-    def reset_memory(self):
+    def reset_memory(self, renderer):
+        '''
+        Reset long-term information.
+        '''
+        self.controller = controller()
         self.memory = memory()
-        self.controller = controller()
+        self.render = scheduled_render(renderer)
 
-    def update(self, packet, field_info, index, team):
-        self.controller = controller()
+    def update(self, packet, field_info, ball_prediction, index, team):
+        '''
+        Reset short-term information.
+        '''
+        self.ball_prediction = ball_prediction
         self.packet = packet
         self.own_index = index
         self.own_team = team

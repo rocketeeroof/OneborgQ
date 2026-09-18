@@ -21,7 +21,7 @@ class MyBot(Bot):
     def initialize(self):
         # Set up information about the boost pads now that the game is active and the info is available
         self.boost_pad_tracker.initialize_boosts(self.field_info)
-        self.situation = situation()
+        self.situation = situation(self.renderer)
         self.strat = default_strategy()
 
     @override
@@ -39,56 +39,20 @@ class MyBot(Bot):
             return ControllerState()
         # we can now assume there's at least one ball in the match
 
+        self.situation.update(packet, self.field_info, self.ball_prediction, self.index, self.team)
+
         # This is good to keep at the beginning of get_output. It will allow you to continue
         # any sequences that you may have started during a previous call to get_output.
         if self.situation.controller.active_sequence is not None and not self.situation.controller.active_sequence.done:
             return self.situation.controller.active_sequence.tick(packet)
-
-        self.situation.update(packet, self.field_info, self.index, self.team)
         self.situation.controller.clear_controls()
-
-        '''
-        self.renderer.begin_rendering()
-
-        if car_location.dist(ball_location) > 1500:
-            # We're far away from the ball, let's try to lead it a little bit
-            # self.ball_prediction can predict bounces, etc
-            ball_in_future = find_slice_at_time(
-                self.ball_prediction, packet.match_info.seconds_elapsed + 5
-            )
-
-            # ball_in_future might be None if we don't have an adequate ball prediction right now, like during
-            # replays, so check it to avoid errors.
-            if ball_in_future is not None:
-                target_location = Vec3(ball_in_future.physics.location)
-
-                # BallAnchor(0) will dynamically start the point at the ball's current location
-                # 0 makes it reference the ball at index 0 in the packet.balls list
-                self.renderer.draw_line_3d(
-                    BallAnchor(0), target_location, self.renderer.cyan
-                )
-
-        # Draw some things to help understand what the bot is thinking
-        self.renderer.draw_line_3d(
-            CarAnchor(self.index), target_location, self.renderer.white
-        )
-        self.renderer.draw_string_3d(
-            f"Speed: {car_velocity.length():.1f}",
-            CarAnchor(self.index),
-            1,
-            self.renderer.white,
-        )
-        self.renderer.draw_line_3d(
-            target_location - Vec3(0, 0, 50),
-            target_location + Vec3(0, 0, 50),
-            self.renderer.cyan,
-        )
-
-        self.renderer.end_rendering()
-        '''
 
         self.strat.run(self.situation)
         # You can set more controls if you want, like controls.boost.
+        self.renderer.begin_rendering()
+        self.situation.render.render_all()
+        self.situation.render.reset()
+        self.renderer.end_rendering()
 
         return self.situation.controller.controls
 
