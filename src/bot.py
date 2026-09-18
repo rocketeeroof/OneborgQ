@@ -10,6 +10,8 @@ from util.drive import steer_toward_target
 from util.sequence import ControlStep, Sequence
 from util.vec import Vec3
 
+from extra_utils.situation import situation
+
 
 class MyBot(Bot):
     active_sequence: Sequence | None = None
@@ -19,6 +21,7 @@ class MyBot(Bot):
     def initialize(self):
         # Set up information about the boost pads now that the game is active and the info is available
         self.boost_pad_tracker.initialize_boosts(self.field_info)
+        self.situation = situation()
 
     @override
     def get_output(self, packet: GamePacket) -> ControllerState:
@@ -40,8 +43,12 @@ class MyBot(Bot):
         if self.active_sequence is not None and not self.active_sequence.done:
             return self.active_sequence.tick(packet)
 
+        self.situation.update(packet, self.field_info)
+        self.situation.controller.clear_controls()
+
         # Gather some information about our car and the ball
         my_car = packet.players[self.index]
+        opposing_car = packet.players[1 - self.index]
         car_location = Vec3(my_car.physics.location)
         car_velocity = Vec3(my_car.physics.velocity)
         ball_location = Vec3(packet.balls[0].physics.location)
@@ -93,13 +100,12 @@ class MyBot(Bot):
             # We'll do a front flip if the car is moving at a certain speed.
             return self.begin_front_flip(packet)
 
-        controls = ControllerState()
-        controls.steer = steer_toward_target(my_car, target_location)
-        controls.boost = True
-        controls.throttle = 1.0
+        self.situation.controller.set_steer(steer_toward_target(my_car, target_location))
+        self.situation.controller.set_boost(True)
+        self.situation.controller.set_throttle(1.0)
         # You can set more controls if you want, like controls.boost.
 
-        return controls
+        return self.situation.controller.controls
 
     def begin_front_flip(self, packet: GamePacket) -> ControllerState:
         # Send some quickchat just for fun
