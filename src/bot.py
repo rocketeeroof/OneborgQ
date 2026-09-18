@@ -11,7 +11,7 @@ from util.sequence import ControlStep, Sequence
 from util.vec import Vec3
 
 from extra_utils.situation import situation
-
+from extra_utils.strategy import *
 
 class MyBot(Bot):
     active_sequence: Sequence | None = None
@@ -22,6 +22,7 @@ class MyBot(Bot):
         # Set up information about the boost pads now that the game is active and the info is available
         self.boost_pad_tracker.initialize_boosts(self.field_info)
         self.situation = situation()
+        self.strat = default_strategy()
 
     @override
     def get_output(self, packet: GamePacket) -> ControllerState:
@@ -40,24 +41,13 @@ class MyBot(Bot):
 
         # This is good to keep at the beginning of get_output. It will allow you to continue
         # any sequences that you may have started during a previous call to get_output.
-        if self.active_sequence is not None and not self.active_sequence.done:
-            return self.active_sequence.tick(packet)
+        if self.situation.controller.active_sequence is not None and not self.situation.controller.active_sequence.done:
+            return self.situation.controller.active_sequence.tick(packet)
 
-        self.situation.update(packet, self.field_info)
+        self.situation.update(packet, self.field_info, self.index, self.team)
         self.situation.controller.clear_controls()
 
-        # Gather some information about our car and the ball
-        my_car = packet.players[self.index]
-        opposing_car = packet.players[1 - self.index]
-        car_location = Vec3(my_car.physics.location)
-        car_velocity = Vec3(my_car.physics.velocity)
-        ball_location = Vec3(packet.balls[0].physics.location)
-        ball_velocity = Vec3(packet.balls[0].physics.velocity)
-        goal_location = Vec3(0, 5120 * (1 - 2 * self.team), 0)
-        
-        # By default we will chase the ball, but target_location can be changed later
-        target_location = ball_location
-
+        '''
         self.renderer.begin_rendering()
 
         if car_location.dist(ball_location) > 1500:
@@ -95,39 +85,12 @@ class MyBot(Bot):
         )
 
         self.renderer.end_rendering()
+        '''
 
-        if 750 < car_velocity.length() < 800:
-            # We'll do a front flip if the car is moving at a certain speed.
-            return self.begin_front_flip(packet)
-
-        self.situation.controller.set_steer(steer_toward_target(my_car, target_location))
-        self.situation.controller.set_boost(True)
-        self.situation.controller.set_throttle(1.0)
+        self.strat.run(self.situation)
         # You can set more controls if you want, like controls.boost.
 
         return self.situation.controller.controls
-
-    def begin_front_flip(self, packet: GamePacket) -> ControllerState:
-        # Send some quickchat just for fun
-        # There won't be any content of the message for other bots,
-        # but "I got it!" will be display for a human to see!
-        self.send_match_comm(b"", "I got it!")
-
-        # Do a front flip. We will be committed to this for a few seconds and the bot will ignore other
-        # logic during that time because we are setting the active_sequence.
-        self.active_sequence = Sequence(
-            [
-                ControlStep(duration=0.05, controls=ControllerState(jump=True)),
-                ControlStep(duration=0.05, controls=ControllerState(jump=False)),
-                ControlStep(
-                    duration=0.2, controls=ControllerState(jump=True, pitch=-1)
-                ),
-                ControlStep(duration=0.8, controls=ControllerState()),
-            ]
-        )
-
-        # Return the controls associated with the beginning of the sequence so we can start right away.
-        return self.active_sequence.tick(packet)
 
 
 if __name__ == "__main__":

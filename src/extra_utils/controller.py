@@ -1,10 +1,13 @@
 
+from rlbot.flat import BallAnchor, ControllerState, GamePacket
 from rlbot.flat import ControllerState
+from util.sequence import ControlStep, Sequence
 
 class controller():
     def __init__(self):
         self.controls = ControllerState()
         self.history = []
+        self.active_sequence = None
 
     def set_controls(self, controls, name = ""):
         '''
@@ -51,3 +54,17 @@ class controller():
         '''
         self.controls = ControllerState()
         self.history = []
+
+    def begin_front_flip(self, packet: GamePacket) -> ControllerState:
+        self.active_sequence = Sequence(
+            [
+                ControlStep(duration=0.05, controls=ControllerState(jump=True)),
+                ControlStep(duration=0.05, controls=ControllerState(jump=False)),
+                ControlStep(
+                    duration=0.2, controls=ControllerState(jump=True, pitch=-1)
+                ),
+                ControlStep(duration=0.8, controls=ControllerState()),
+            ]
+        )
+
+        return self.active_sequence.tick(packet)
