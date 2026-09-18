@@ -128,4 +128,4 @@ if __name__ == "__main__":
     # Connect to RLBot and run
     # Having the agent id here allows for easier development,
     # as otherwise the RLBOT_AGENT_ID environment variable must be set.
-    MyBot("rlbot_community/python_example").run()
+    MyBot("scumclass/oneborg_q").run()

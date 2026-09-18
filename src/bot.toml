@@ -1,7 +1,7 @@
 #:schema https://rlbot.org/schemas/agent.json
 [settings]
 # The name that will be displayed in game
-name = "Python Example"
+name = "Oneborg Q"
 # Path to loadout config from runner
 loadout_file = "loadout.toml"
 # (OPTIONAL) - what you want the working directory set to
@@ -35,7 +35,7 @@ fun_fact = "Made possible by RLBot v5"
 # Link to your repository
 source_link = "https://github.com/RLBot/python-example"
 # Name of the bot's creator/developer
-developer = "The RLBot community"
+developer = "Scumclass"
 # Programming language
 language = "Python"
 # ALL POSSIBLE TAGS: 1v1, teamplay, goalie, hoops, dropshot, snow-day, rumble, spike-rush, heatseeker, memebot

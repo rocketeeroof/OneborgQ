@@ -1,66 +1,47 @@
-# You don't have to manually edit this file!
-# RLBotGUI has an appearance editor with a nice colorpicker, database of items and more!
-# To open it up, simply click the (i) icon next to your bot's name and then click Edit Loadout
-
 [blue_loadout]
-# Primary Color selection
-team_color_id = 7
-# Secondary Color selection
-custom_color_id = 85
-# Car type (Octane, Merc, etc)
-car_id = 3451
-# Type of decal
-decal_id = 3476
-# Wheel selection
-wheels_id = 3899
-# Boost selection
-boost_id = 52
-# Antenna Selection
-antenna_id = 0
-# Hat Selection
-hat_id = 5111
-# Paint Type (for first color)
-paint_finish_id = 272
-# Paint Type (for secondary color)
-custom_finish_id = 274
-# Engine Audio Selection
-engine_audio_id = 1873
-# Car trail Selection
-trails_id = 1974
-# Goal Explosion Selection
-goal_explosion_id = 3071
+  team_color_id = 7
+  custom_color_id = 85
+  car_id = 3451
+  decal_id = 3476
+  wheels_id = 3899
+  boost_id = 52
+  antenna_id = 0
+  hat_id = 5111
+  paint_finish_id = 272
+  custom_finish_id = 274
+  engine_audio_id = 1873
+  trails_id = 1974
+  goal_explosion_id = 3071
+  [blue_loadout.paint]
+    car_paint_id = 0
+    decal_paint_id = 0
+    wheels_paint_id = 0
+    boost_paint_id = 10
+    antenna_paint_id = 0
+    hat_paint_id = 0
+    trails_paint_id = 5
+    goal_explosion_paint_id = 10
 
 [orange_loadout]
-team_color_id = 7
-custom_color_id = 76
-car_id = 3451
-decal_id = 3476
-wheels_id = 3899
-boost_id = 52
-antenna_id = 0
-hat_id = 5111
-paint_finish_id = 272
-custom_finish_id = 274
-engine_audio_id = 1873
-trails_id = 1974
-goal_explosion_id = 3071
-
-[blue_loadout.paint]
-car_paint_id = 0
-decal_paint_id = 0
-wheels_paint_id = 0	
-boost_paint_id = 10
-antenna_paint_id = 0
-hat_paint_id = 0
-trails_paint_id = 5
-goal_explosion_paint_id = 10
-
-[orange_loadout.paint]
-car_paint_id = 0
-decal_paint_id = 0
-wheels_paint_id = 0
-boost_paint_id = 10
-antenna_paint_id = 0
-hat_paint_id = 0
-trails_paint_id = 5
-goal_explosion_paint_id = 10
+  team_color_id = 7
+  custom_color_id = 76
+  car_id = 3451
+  decal_id = 3476
+  wheels_id = 3899
+  boost_id = 52
+  antenna_id = 0
+  hat_id = 5111
+  paint_finish_id = 272
+  custom_finish_id = 274
+  engine_audio_id = 1873
+  trails_id = 1974
+  goal_explosion_id = 3071
+  [orange_loadout.paint]
+    car_paint_id = 0
+    decal_paint_id = 0
+    wheels_paint_id = 0
+    boost_paint_id = 10
+    antenna_paint_id = 0
+    hat_paint_id = 0
+    trails_paint_id = 5
+    goal_explosion_paint_id = 10
